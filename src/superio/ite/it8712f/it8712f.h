@@ -35,8 +35,9 @@
 #define IT8712F_GAME 0x09 /* GAME port */
 #define IT8712F_IR   0x0a /* Consumer IR */
 
-void it8712f_kill_watchdog(void);
+void it8712f_kill_watchdog(device_t dev);
+void it8712f_24mhz_clkin(device_t dev);
+void it8712f_enable_3vsbsw(device_t dev);
 void it8712f_enable_serial(device_t dev, u16 iobase);
-void it8712f_24mhz_clkin(void);
-void it8712f_enable_3vsbsw(void);
-#endif
+
+#endif /* SUPERIO_ITE_IT8712F_IT8712F_H */

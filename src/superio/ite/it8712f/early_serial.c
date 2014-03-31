@@ -19,33 +19,24 @@
  */
 
 #include <arch/io.h>
+#include <device/pnp.h>
 #include "it8712f.h"
-
-/* The base address is 0x2e or 0x4e, depending on config bytes. */
-#define SIO_BASE                     0x2e
-#define SIO_INDEX                    SIO_BASE
-#define SIO_DATA                     (SIO_BASE + 1)
 
 /* Global configuration registers. */
 #define IT8712F_CONFIG_REG_CC        0x02 /* Configure Control (write-only). */
-#define IT8712F_CONFIG_REG_LDN       0x07 /* Logical Device Number. */
 #define IT8712F_CONFIG_REG_CONFIGSEL 0x22 /* Configuration Select. */
 #define IT8712F_CONFIG_REG_CLOCKSEL  0x23 /* Clock Selection. */
 #define IT8712F_CONFIG_REG_SWSUSP    0x24 /* Software Suspend, Flash I/F. */
 #define IT8712F_CONFIG_REG_MFC       0x2a /* Multi-function control */
 #define IT8712F_CONFIG_REG_WATCHDOG  0x72 /* Watchdog control. */
 
-static void it8712f_sio_write(u8 ldn, u8 index, u8 value)
-{
-	outb(IT8712F_CONFIG_REG_LDN, SIO_BASE);
-	outb(ldn, SIO_DATA);
-	outb(index, SIO_BASE);
-	outb(value, SIO_DATA);
-}
 
-static void it8712f_enter_conf(void)
+/*
+ * Enable configuration: pass entry key '0x87 ??'
+ */
+static void pnp_enter_conf_state(device_t dev)
 {
-	u16 port = 0x2e; /* TODO: Don't hardcode! */
+	u16 port = dev >> 8;
 
 	outb(0x87, port);
 	outb(0x01, port);
@@ -53,17 +44,21 @@ static void it8712f_enter_conf(void)
 	outb((port == 0x4e) ? 0xaa : 0x55, port);
 }
 
-static void it8712f_exit_conf(void)
+/*
+ * Disable configuration: pass exit key '0x02'
+ */
+static void pnp_exit_conf_state(device_t dev)
 {
-	it8712f_sio_write(0x00, IT8712F_CONFIG_REG_CC, 0x02);
+	pnp_write_config(dev, IT8712F_CONFIG_REG_CC, 0x02);
 }
 
+
 /* Select 24MHz CLKIN (48MHz is the default). */
-void it8712f_24mhz_clkin(void)
+void it8712f_24mhz_clkin(device_t dev)
 {
-	it8712f_enter_conf();
-	it8712f_sio_write(0x00, IT8712F_CONFIG_REG_CLOCKSEL, 0x1);
-	it8712f_exit_conf();
+	pnp_enter_conf_state(dev);
+	pnp_write_config(dev, IT8712F_CONFIG_REG_CLOCKSEL, 0x1);
+	pnp_exit_conf_state(dev);
 }
 
 /*
@@ -75,25 +70,28 @@ void it8712f_24mhz_clkin(void)
  * 0: 3VSBSW# will be always inactive.
  * 1: 3VSBSW# enabled. It will be (NOT SUSB#) NAND SUSC#.
  */
-void it8712f_enable_3vsbsw(void)
+void it8712f_enable_3vsbsw(device_t dev)
 {
-	it8712f_enter_conf();
-	it8712f_sio_write(IT8712F_GPIO, IT8712F_CONFIG_REG_MFC, 0x80);
-	it8712f_exit_conf();
+	pnp_enter_conf_state(dev);
+	pnp_write_config(dev, IT8712F_CONFIG_REG_MFC, 0x80);
+	pnp_exit_conf_state(dev);
 }
 
-void it8712f_kill_watchdog(void)
+void it8712f_kill_watchdog(device_t dev)
 {
-	it8712f_enter_conf();
-	it8712f_sio_write(IT8712F_GPIO, IT8712F_CONFIG_REG_WATCHDOG, 0x00);
-	it8712f_exit_conf();
+	pnp_enter_conf_state(dev);
+	pnp_write_config(dev, IT8712F_CONFIG_REG_WATCHDOG, 0x00);
+	pnp_exit_conf_state(dev);
 }
 
-/* Enable the serial port(s). */
+/*
+ * Bring up early serial debugging output before the RAM is initialized.
+ */
 void it8712f_enable_serial(device_t dev, u16 iobase)
 {
 	/* (1) Enter the configuration state (MB PnP mode). */
-	it8712f_enter_conf();
+	pnp_enter_conf_state(dev);
+	pnp_set_logical_device(dev);
 
 	/* (2) Modify the data of configuration registers. */
 
@@ -105,13 +103,13 @@ void it8712f_enable_serial(device_t dev, u16 iobase)
 
 	/* it8712f_sio_write(0x00, IT8712F_CONFIG_REG_CONFIGSEL, 0x00); */
 
-	/* Enable serial port(s). */
-	it8712f_sio_write(IT8712F_SP1, 0x30, 0x1); /* Serial port 1 */
-	it8712f_sio_write(IT8712F_SP2, 0x30, 0x1); /* Serial port 2 */
+	pnp_set_enable(dev, 0);
+	pnp_set_iobase(dev, PNP_IDX_IO0, iobase);
+	pnp_set_enable(dev, 1);
 
 	/* Clear software suspend mode (clear bit 0). TODO: Needed? */
 	/* it8712f_sio_write(0x00, IT8712F_CONFIG_REG_SWSUSP, 0x00); */
 
 	/* (3) Exit the configuration state (MB PnP mode). */
-	it8712f_exit_conf();
+	pnp_exit_conf_state(dev);
 }
