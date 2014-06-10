@@ -862,7 +862,7 @@ MemS3ResumeConstructNBBlockTN (
   // Determine if this is the expected NB Type
   //
   GetLogicalIdOfSocket (MemPtr->DiesPerSystem[NodeID].SocketId, &(MemPtr->DiesPerSystem[NodeID].LogicalCpuid), &(MemPtr->StdHeader));
-  if (!MemNIsIdSupportedTN (NBPtr, &(MemPtr->DiesPerSystem[NodeID].LogicalCpuid))) {
+  if (!MemNIsIdSupportedRL (NBPtr, &(MemPtr->DiesPerSystem[NodeID].LogicalCpuid))) {
     return FALSE;
   }
 
@@ -897,7 +897,7 @@ MemS3ResumeConstructNBBlockTN (
   NBPtr->MemNCmnGetSetFieldNb = MemNCmnGetSetFieldTN;
   NBPtr->GetBitField = MemNGetBitFieldNb;
   NBPtr->SetBitField = MemNSetBitFieldNb;
-  NBPtr->MemNIsIdSupportedNb = MemNIsIdSupportedTN;
+  NBPtr->MemNIsIdSupportedNb = MemNIsIdSupportedRL;
   ((S3_MEM_NB_BLOCK *)S3NBPtr)->MemS3ExitSelfRefReg = (VOID (*) (MEM_NB_BLOCK *, AMD_CONFIG_PARAMS *)) memDefRet;
   ((S3_MEM_NB_BLOCK *)S3NBPtr)->MemS3GetConPCIMask = MemNS3GetConPCIMaskTN;
   ((S3_MEM_NB_BLOCK *)S3NBPtr)->MemS3GetConMSRMask = (VOID (*) (MEM_NB_BLOCK *, DESCRIPTOR_GROUP *)) memDefRet;

@@ -1,10 +1,7 @@
-/* $NoKeywords:$ */
 /**
  * @file
  *
  * GFx tables
- *
- *
  *
  * @xrefitem bom "File Content Label" "Release Content"
  * @e project:     AGESA
@@ -13,9 +10,8 @@
  *
  */
 /*
-*****************************************************************************
-*
- * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc.
+ * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2014 Edward O'Callaghan <eocallaghan@alterapraxis.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -39,13 +35,8 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-* ***************************************************************************
-*
-*/
-/*----------------------------------------------------------------------------------------
- *                             M O D U L E S    U S E D
- *----------------------------------------------------------------------------------------
  */
+
 #include  "AGESA.h"
 #include  "Gnb.h"
 #include  "GnbPcie.h"
@@ -54,29 +45,6 @@
 #include  "GnbRegistersTN.h"
 #include  "cpuFamilyTranslation.h"
 #include  "GnbInitTN.h"
-
-/*----------------------------------------------------------------------------------------
- *                   D E F I N I T I O N S    A N D    M A C R O S
- *----------------------------------------------------------------------------------------
- */
-
-
-/*----------------------------------------------------------------------------------------
- *                  T Y P E D E F S     A N D     S T R U C T U  R E S
- *----------------------------------------------------------------------------------------
- */
-
-
-/*----------------------------------------------------------------------------------------
- *           P R O T O T Y P E S     O F     L O C A L     F U  N C T I O N S
- *----------------------------------------------------------------------------------------
- */
-
-
-/*----------------------------------------------------------------------------------------
- *           T A B L E S
- *----------------------------------------------------------------------------------------
- */
 
 GNB_TABLE ROMDATA GfxGmcColockGatingDisableTN [] = {
   //2.1 Disable clock-gating
@@ -1004,7 +972,7 @@ GNB_TABLE ROMDATA GfxEnvInitTableTN [] = {
   // Step 16
   GNB_ENTRY_FULL_POLL (
     TABLE_PROPERTY_IGFX_DISABLED,
-    (AMD_F15_TN_ALL & 0x0000000000000100ull) /* AMD_F15_TN_GT_A0 */,
+    (AMD_F15_RL_ALL & 0x0000000000000100ull) /* AMD_F15_TN_GT_A0 */,
     D0F0xBC_xE03002FC_TYPE,
     D0F0xBC_xE03002FC_ADDRESS,
     0xFFFFFFFF,
@@ -1013,7 +981,7 @@ GNB_TABLE ROMDATA GfxEnvInitTableTN [] = {
   // Step 17
   GNB_ENTRY_FULL_POLL (
     TABLE_PROPERTY_IGFX_DISABLED,
-    (AMD_F15_TN_ALL & 0x0000000000000100ull) /* AMD_F15_TN_GT_A0 */,
+    (AMD_F15_RL_ALL & 0x0000000000000100ull) /* AMD_F15_TN_GT_A0 */,
     D0F0xBC_xE03002E4_TYPE,
     D0F0xBC_xE03002E4_ADDRESS,
     0xFFFFFFFF,

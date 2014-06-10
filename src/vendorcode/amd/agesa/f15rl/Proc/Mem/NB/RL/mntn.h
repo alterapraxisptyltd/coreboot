@@ -137,7 +137,7 @@ MemNInitNBRegTableTN (
   );
 
 BOOLEAN
-MemNIsIdSupportedTN (
+MemNIsIdSupportedRL (
   IN OUT   MEM_NB_BLOCK *NBPtr,
   IN       CPU_LOGICAL_ID *LogicalIdPtr
   );

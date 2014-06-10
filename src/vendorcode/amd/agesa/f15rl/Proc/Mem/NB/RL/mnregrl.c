@@ -107,18 +107,18 @@ STATIC CONST UINT8 InstancesPerTypeTN[8] = {8, 3, 1, 2, 2, 0, 1, 1};
  *     @param[in,out]   *NBPtr   - Pointer to the MEM_NB_BLOCK
  *     @param[in]       *LogicalIdPtr - Pointer to the CPU_LOGICAL_ID
  *
- *     @return          TRUE -  This node is a TN.
- *     @return          FALSE - This node is not a TN.
+ *     @return          TRUE -  This node is a RL.
+ *     @return          FALSE - This node is not a RL.
  *
  */
 BOOLEAN
-MemNIsIdSupportedTN (
+MemNIsIdSupportedRL (
   IN OUT   MEM_NB_BLOCK *NBPtr,
   IN       CPU_LOGICAL_ID *LogicalIdPtr
   )
 {
-  if (((LogicalIdPtr->Family & AMD_FAMILY_15_TN) != 0)
-      && ((LogicalIdPtr->Revision & (AMD_F15_OR_ALL | AMD_F15_TN_ALL | 0x0000000000100000ull)  ) != 0)) {
+  if (((LogicalIdPtr->Family & AMD_FAMILY_15_RL) != 0)
+      && ((LogicalIdPtr->Revision & (AMD_F15_OR_ALL | AMD_F15_RL_ALL | 0x0000000000100000ull)  ) != 0)) {
     return TRUE;
   } else {
     return FALSE;

@@ -2,6 +2,7 @@
  * This file is part of the coreboot project.
  *
  * Copyright (C) 2012 Advanced Micro Devices, Inc.
+ * Copyright (C) 2014 Edward O'Callaghan <eocallaghan@alterapraxis.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,6 +140,7 @@ static struct device_operations cpu_dev_ops = {
 
 static struct cpu_device_id cpu_table[] = {
 	{ X86_VENDOR_AMD, 0x610f00 },	  /* TN-A0 */
+	{ X86_VENDOR_AMD, 0x610f31 },	  /* RL-A1 */
 	{ 0, 0 },
 };
 

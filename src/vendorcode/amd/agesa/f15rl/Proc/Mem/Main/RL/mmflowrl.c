@@ -128,7 +128,7 @@ MemMFlowTN (
   MemPtr = MemMainPtr->MemPtr;
 
   GetLogicalIdOfSocket (MemPtr->DiesPerSystem[BSP_DIE].SocketId, &(MemPtr->DiesPerSystem[BSP_DIE].LogicalCpuid), &(MemPtr->StdHeader));
-  if (!MemNIsIdSupportedTN (NBPtr, &(MemPtr->DiesPerSystem[BSP_DIE].LogicalCpuid))) {
+  if (!MemNIsIdSupportedRL (NBPtr, &(MemPtr->DiesPerSystem[BSP_DIE].LogicalCpuid))) {
     MemPtr->IsFlowControlSupported = FALSE;
     return AGESA_FATAL;
   } else {

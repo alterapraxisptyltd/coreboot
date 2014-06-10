@@ -145,7 +145,7 @@ MemConstructNBBlockTN (
   // Determine if this is the expected NB Type
   //
   GetLogicalIdOfSocket (MemPtr->DiesPerSystem->SocketId, &(MemPtr->DiesPerSystem->LogicalCpuid), &(MemPtr->StdHeader));
-  if (!MemNIsIdSupportedTN (NBPtr, &(MemPtr->DiesPerSystem->LogicalCpuid))) {
+  if (!MemNIsIdSupportedRL (NBPtr, &(MemPtr->DiesPerSystem->LogicalCpuid))) {
     return FALSE;
   }
 
@@ -551,7 +551,7 @@ memNEnableTrainSequenceTN (
 {
   BOOLEAN Retval;
   Retval = TRUE;
-  if (!MemNIsIdSupportedTN (NBPtr, &(NBPtr->MemPtr->DiesPerSystem[NBPtr->MCTPtr->NodeId].LogicalCpuid))) {
+  if (!MemNIsIdSupportedRL (NBPtr, &(NBPtr->MemPtr->DiesPerSystem[NBPtr->MCTPtr->NodeId].LogicalCpuid))) {
     Retval = FALSE;
   }
   return Retval;

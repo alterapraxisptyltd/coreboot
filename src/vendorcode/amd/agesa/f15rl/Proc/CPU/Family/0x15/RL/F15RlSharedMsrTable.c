@@ -1,4 +1,3 @@
-/* $NoKeywords:$ */
 /**
  * @file
  *
@@ -11,9 +10,8 @@
  *
  */
 /*
- ******************************************************************************
- *
- * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc.
+ * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2014 Edward O'Callaghan <eocallaghan@alterapraxis.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,13 +35,8 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************
  */
 
-/*----------------------------------------------------------------------------------------
- *                             M O D U L E S    U S E D
- *----------------------------------------------------------------------------------------
- */
 #include "AGESA.h"
 #include "amdlib.h"
 #include "cpuRegisters.h"
@@ -54,23 +47,7 @@
 CODE_GROUP (G3_DXE)
 RDATA_GROUP (G3_DXE)
 
-#define FILECODE PROC_CPU_FAMILY_0X15_TN_F15TNSHAREDMSRTABLE_FILECODE
-
-
-/*----------------------------------------------------------------------------------------
- *                   D E F I N I T I O N S    A N D    M A C R O S
- *----------------------------------------------------------------------------------------
- */
-
-/*----------------------------------------------------------------------------------------
- *                  T Y P E D E F S     A N D     S T R U C T U R E S
- *----------------------------------------------------------------------------------------
- */
-
-/*----------------------------------------------------------------------------------------
- *           P R O T O T Y P E S     O F     L O C A L     F U N C T I O N S
- *----------------------------------------------------------------------------------------
- */
+#define FILECODE PROC_CPU_FAMILY_0X15_RL_F15RLSHAREDMSRTABLE_FILECODE
 
 VOID
 F15TnFpCfgInit (
@@ -85,10 +62,6 @@ Update800MHzHtcPstateTo900MHz (
   IN       AMD_CONFIG_PARAMS  *StdHeader
   );
 
-/*----------------------------------------------------------------------------------------
- *                          E X P O R T E D    F U N C T I O N S
- *----------------------------------------------------------------------------------------
- */
 STATIC CONST MSR_TYPE_ENTRY_INITIALIZER ROMDATA F15TnSharedMsrRegisters[] =
 {
 //  M S R    T a b l e s
@@ -99,8 +72,8 @@ STATIC CONST MSR_TYPE_ENTRY_INITIALIZER ROMDATA F15TnSharedMsrRegisters[] =
   {
     MsrRegister,
     {
-      AMD_FAMILY_15_TN,                   // CpuFamily
-      AMD_F15_TN_ALL                      // CpuRevision
+      AMD_FAMILY_15_RL,                   // CpuFamily
+      AMD_F15_RL_ALL                      // CpuRevision
     },
     {AMD_PF_ALL},                           // platformFeatures
     {{
@@ -115,8 +88,8 @@ STATIC CONST MSR_TYPE_ENTRY_INITIALIZER ROMDATA F15TnSharedMsrRegisters[] =
   {
     MsrRegister,
     {
-      AMD_FAMILY_15_TN,                   // CpuFamily
-      AMD_F15_TN_ALL                      // CpuRevision
+      AMD_FAMILY_15_RL,                   // CpuFamily
+      AMD_F15_RL_ALL                      // CpuRevision
     },
     {AMD_PF_ALL},                           // platformFeatures
     {{
@@ -131,8 +104,8 @@ STATIC CONST MSR_TYPE_ENTRY_INITIALIZER ROMDATA F15TnSharedMsrRegisters[] =
   {
     MsrRegister,
     {
-      AMD_FAMILY_15_TN,                   // CpuFamily
-      AMD_F15_TN_ALL                      // CpuRevision
+      AMD_FAMILY_15_RL,                   // CpuFamily
+      AMD_F15_RL_ALL                      // CpuRevision
     },
     {AMD_PF_ALL},                           // platformFeatures
     {{
@@ -146,8 +119,8 @@ STATIC CONST MSR_TYPE_ENTRY_INITIALIZER ROMDATA F15TnSharedMsrRegisters[] =
   {
     MsrRegister,
     {
-      AMD_FAMILY_15_TN,                   // CpuFamily
-      AMD_F15_TN_ALL                      // CpuRevision
+      AMD_FAMILY_15_RL,                   // CpuFamily
+      AMD_F15_RL_ALL                      // CpuRevision
     },
     {AMD_PF_ALL},                           // platformFeatures
     {{
@@ -164,8 +137,8 @@ STATIC CONST MSR_TYPE_ENTRY_INITIALIZER ROMDATA F15TnSharedMsrRegisters[] =
   {
     MsrRegister,
     {
-      AMD_FAMILY_15_TN,                   // CpuFamily
-      AMD_F15_TN_ALL                      // CpuRevision
+      AMD_FAMILY_15_RL,                   // CpuFamily
+      AMD_F15_RL_ALL                      // CpuRevision
     },
     {AMD_PF_ALL},                           // platformFeatures
     {{
@@ -180,8 +153,8 @@ STATIC CONST MSR_TYPE_ENTRY_INITIALIZER ROMDATA F15TnSharedMsrRegisters[] =
   {
     MsrRegister,
     {
-      AMD_FAMILY_15_TN,                   // CpuFamily
-      AMD_F15_TN_ALL                      // CpuRevision
+      AMD_FAMILY_15_RL,                   // CpuFamily
+      AMD_F15_RL_ALL                      // CpuRevision
     },
     {AMD_PF_ALL},                           // platformFeatures
     {{
@@ -206,8 +179,8 @@ STATIC CONST MSR_CU_TYPE_ENTRY_INITIALIZER ROMDATA F15TnSharedMsrCuRegisters[] =
   {
     CompUnitCountsMsr,
     {
-      AMD_FAMILY_15_TN,                   // CpuFamily
-      AMD_F15_TN_ALL                      // CpuRevision
+      AMD_FAMILY_15_RL,                   // CpuFamily
+      AMD_F15_RL_ALL                      // CpuRevision
     },
     {AMD_PF_ALL},                           // platformFeatures
     {{
@@ -226,8 +199,8 @@ STATIC CONST MSR_CU_TYPE_ENTRY_INITIALIZER ROMDATA F15TnSharedMsrCuRegisters[] =
   {
     CompUnitCountsMsr,
     {
-      AMD_FAMILY_15_TN,                   // CpuFamily
-      AMD_F15_TN_ALL                      // CpuRevision
+      AMD_FAMILY_15_RL,                   // CpuFamily
+      AMD_F15_RL_ALL                      // CpuRevision
     },
     {AMD_PF_ALL},                           // platformFeatures
     {{
@@ -256,8 +229,8 @@ STATIC CONST FAM_SPECIFIC_WORKAROUND_TYPE_ENTRY_INITIALIZER ROMDATA F15TnSharedM
   {
     FamSpecificWorkaround,
     {
-      AMD_FAMILY_15_TN,
-      AMD_F15_TN_ALL
+      AMD_FAMILY_15_RL,
+      AMD_F15_RL_ALL
     },
     {AMD_PF_ALL},
     {{
@@ -328,8 +301,8 @@ STATIC CONST FAM_SPECIFIC_WORKAROUND_TYPE_ENTRY_INITIALIZER ROMDATA F15TnPerNode
   {
     FamSpecificWorkaround,
     {
-      (AMD_FAMILY_15_OR | AMD_FAMILY_15_TN | 0x0000000000000800ull) ,                        // CpuFamily
-      AMD_F15_TN_ALL                        // CpuRevision
+      (AMD_FAMILY_15_OR | AMD_FAMILY_15_TN | AMD_FAMILY_15_RL | 0x0000000000000800ull), /* CpuFamily */
+      AMD_F15_RL_ALL                        // CpuRevision
     },
     {AMD_PF_ALL},                           // platformFeatures
     {{
@@ -385,4 +358,3 @@ Update800MHzHtcPstateTo900MHz (
     LibAmdMsrWrite ((HtcRegister.HtcPstateLimit + MSR_PSTATE_0), (UINT64 *) &HtcPstate, StdHeader);
   }
 }
-

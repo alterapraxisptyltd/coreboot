@@ -15,7 +15,8 @@
 /*
 *****************************************************************************
 *
- * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc.
+ * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2014 Edward O'Callaghan <eocallaghan@alterpraxis.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,8 +44,8 @@
 *
 */
 
-#ifndef _GNB_INIT_TN_INSTALL_H_
-#define _GNB_INIT_TN_INSTALL_H_
+#ifndef _GNB_INIT_RL_INSTALL_H_
+#define _GNB_INIT_RL_INSTALL_H_
 
 //-----------------------------------------------------------------------
 // Specify definition used by module services
@@ -78,7 +79,7 @@
 
   GNB_SERVICE GnbPcieCongigServicesTN = {
     GnbPcieFamConfigService,
-    AMD_FAMILY_TN,
+    AMD_FAMILY_RL,
     &GnbPcieConfigProtocolTN,
     SERVICES_POINTER
   };
@@ -101,7 +102,7 @@
 
   GNB_SERVICE GnbPcieInitServicesTN = {
     GnbPcieFamInitService,
-    AMD_FAMILY_TN,
+    AMD_FAMILY_RL,
     &GnbPcieInitProtocolTN,
     SERVICES_POINTER
   };
@@ -124,7 +125,7 @@
 
       GNB_SERVICE GnbPcieDebugServicesTN = {
         GnbPcieFamDebugService,
-        AMD_FAMILY_TN,
+        AMD_FAMILY_RL,
         &GnbPcieDebugProtocolTN,
         SERVICES_POINTER
       };
@@ -145,7 +146,7 @@
 
   GNB_SERVICE GnbRegisterAccessServicesTN = {
     GnbRegisterAccessService,
-    AMD_FAMILY_TN,
+    AMD_FAMILY_RL,
     &GnbRegiterAccessProtocol,
     SERVICES_POINTER
   };
@@ -162,7 +163,7 @@
 
   GNB_SERVICE GnbIommuConfigServicesTN = {
     GnbIommuService,
-    AMD_FAMILY_TN,
+    AMD_FAMILY_RL,
     &GnbIommuConfigProtocolTN,
     SERVICES_POINTER
   };
@@ -170,4 +171,4 @@
   #define SERVICES_POINTER  &GnbIommuConfigServicesTN
 
 #endif
-#endif  // _GNB_INIT_TN_INSTALL_H_
+#endif /* _GNB_INIT_RL_INSTALL_H_ */

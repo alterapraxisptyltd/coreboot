@@ -123,7 +123,7 @@ MemNIdentifyDimmConstructorTN (
   // Determine if this is the expected NB Type
   //
   GetLogicalIdOfSocket (MemPtr->DiesPerSystem[NodeID].SocketId, &(MemPtr->DiesPerSystem[NodeID].LogicalCpuid), &(MemPtr->StdHeader));
-  if (!MemNIsIdSupportedTN (NBPtr, &(MemPtr->DiesPerSystem[NodeID].LogicalCpuid))) {
+  if (!MemNIsIdSupportedRL (NBPtr, &(MemPtr->DiesPerSystem[NodeID].LogicalCpuid))) {
     return FALSE;
   }
 

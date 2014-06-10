@@ -1,19 +1,18 @@
-/* $NoKeywords:$ */
 /**
  * @file
  *
- * AMD Family_15 Trinity Logical ID Table
+ * AMD Family_15 Richland Logical ID Table
  *
  * @xrefitem bom "File Content Label" "Release Content"
  * @e project:      AGESA
- * @e sub-project:  CPU/Family/0x15/TN
- * @e \$Revision: 63425 $   @e \$Date: 2011-12-22 11:24:10 -0600 (Thu, 22 Dec 2011) $
+ * --@e sub-project:  CPU/Family/0x15/TN
+ * --@e \$Revision: 63425 $   @e \$Date: 2011-12-22 11:24:10 -0600 (Thu, 22 Dec 2011) $
  *
  */
 /*
- ******************************************************************************
  *
- * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc.
+ * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2014 Edward O'Callaghan <eocallaghan@alterapraxis.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,36 +36,18 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************
  */
 
-/*----------------------------------------------------------------------------------------
- *                             M O D U L E S    U S E D
- *----------------------------------------------------------------------------------------
- */
 #include "AGESA.h"
 #include "cpuRegisters.h"
 #include "Filecode.h"
 CODE_GROUP (G3_DXE)
 RDATA_GROUP (G3_DXE)
 
-#define FILECODE PROC_CPU_FAMILY_0X15_TN_F15TNLOGICALIDTABLES_FILECODE
+#define FILECODE PROC_CPU_FAMILY_0X15_RL_F15RLLOGICALIDTABLES_FILECODE
 
+/* FIXME: Rename GetF15TnLogicalIdAndRev() func */
 
-/*----------------------------------------------------------------------------------------
- *                   D E F I N I T I O N S    A N D    M A C R O S
- *----------------------------------------------------------------------------------------
- */
-
-/*----------------------------------------------------------------------------------------
- *                  T Y P E D E F S     A N D     S T R U C T U R E S
- *----------------------------------------------------------------------------------------
- */
-
-/*----------------------------------------------------------------------------------------
- *           P R O T O T Y P E S     O F     L O C A L     F U N C T I O N S
- *----------------------------------------------------------------------------------------
- */
 VOID
 GetF15TnLogicalIdAndRev (
      OUT   CONST CPU_LOGICAL_ID_XLAT **TnIdPtr,
@@ -75,16 +56,11 @@ GetF15TnLogicalIdAndRev (
   IN OUT   AMD_CONFIG_PARAMS *StdHeader
   );
 
-/*----------------------------------------------------------------------------------------
- *                          E X P O R T E D    F U N C T I O N S
- *----------------------------------------------------------------------------------------
- */
-
-STATIC CONST CPU_LOGICAL_ID_XLAT ROMDATA CpuF15TnLogicalIdAndRevArray[] =
+STATIC CONST CPU_LOGICAL_ID_XLAT ROMDATA CpuF15RlLogicalIdAndRevArray[] =
 {
   {
-    0x6101,
-    AMD_F15_TN_A1
+    0x6131,
+    AMD_F15_RL_A1
   },
   {
     0x6100,
@@ -100,8 +76,7 @@ GetF15TnLogicalIdAndRev (
   IN OUT   AMD_CONFIG_PARAMS *StdHeader
   )
 {
-  *NumberOfElements = (sizeof (CpuF15TnLogicalIdAndRevArray) / sizeof (CPU_LOGICAL_ID_XLAT));
-  *TnIdPtr = CpuF15TnLogicalIdAndRevArray;
-  *LogicalFamily = AMD_FAMILY_15_TN;
+  *NumberOfElements = (sizeof (CpuF15RlLogicalIdAndRevArray) / sizeof (CPU_LOGICAL_ID_XLAT));
+  *TnIdPtr = CpuF15RlLogicalIdAndRevArray;
+  *LogicalFamily = AMD_FAMILY_15_RL;
 }
-

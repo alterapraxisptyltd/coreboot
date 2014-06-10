@@ -10,11 +10,12 @@
  * @xrefitem bom "File Content Label" "Release Content"
  * @e project:      AGESA
  * @e sub-project:  Options
- * @e \$Revision: 64464 $   @e \$Date: 2012-01-21 11:28:59 -0600 (Sat, 21 Jan 2012) $
+ * --@e \$Revision: 64464 $   @e \$Date: 2012-01-21 11:28:59 -0600 (Sat, 21 Jan 2012) $
  */
 /*****************************************************************************
  *
- * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc.
+ * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2014 Edward O'Callaghan <eocallaghan@alterpraxis.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -75,9 +76,13 @@
   #define GNB_TYPE_TN  TRUE
 #endif
 
+#if (OPTION_FAMILY15H_RL == TRUE)
+  #undef  GNB_TYPE_RL
+  #define GNB_TYPE_RL  TRUE
+#endif
 
 
-#if (GNB_TYPE_TN == TRUE  || GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE )
+#if (GNB_TYPE_RL == TRUE  || GNB_TYPE_TN == TRUE  || GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE )
 //---------------------------------------------------------------------------------------------------
 // Service installation
 //---------------------------------------------------------------------------------------------------
@@ -87,7 +92,7 @@
   #include "GnbGfx.h"
 
   #define SERVICES_POINTER  NULL
-  #if (GNB_TYPE_TN == TRUE)
+  #if (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
     #include "GnbInitTNInstall.h"
   #endif
   GNB_SERVICE   *ServiceTable = SERVICES_POINTER;
@@ -101,7 +106,7 @@
   #endif
 
   #ifndef CFG_LCLK_DEEP_SLEEP_EN
-    #if (GNB_TYPE_TN == TRUE)
+    #if (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       #define  CFG_LCLK_DEEP_SLEEP_EN                       FALSE
     #else
       #define  CFG_LCLK_DEEP_SLEEP_EN                       TRUE
@@ -113,7 +118,7 @@
   #endif
 
   #ifndef CFG_GMC_POWER_GATING
-    #if (GNB_TYPE_TN == TRUE)
+    #if (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       #define CFG_GMC_POWER_GATING                          GmcPowerGatingWidthStutter
     #else
       #define CFG_GMC_POWER_GATING                          GmcPowerGatingWidthStutter
@@ -121,7 +126,7 @@
   #endif
 
   #ifndef CFG_SMU_SCLK_CLOCK_GATING_ENABLE
-    #if (GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE)
+    #if (GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       #define  CFG_SMU_SCLK_CLOCK_GATING_ENABLE           TRUE
     #else
       #define CFG_SMU_SCLK_CLOCK_GATING_ENABLE            FALSE
@@ -175,7 +180,7 @@
   #endif
 
   #ifndef CFG_IOC_LCLK_CLOCK_GATING_ENABLE
-    #if (GNB_TYPE_TN == TRUE)
+    #if (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       #define  CFG_IOC_LCLK_CLOCK_GATING_ENABLE           TRUE
     #else
       #define CFG_IOC_LCLK_CLOCK_GATING_ENABLE            FALSE
@@ -183,7 +188,7 @@
   #endif
 
   #ifndef CFG_IOC_SCLK_CLOCK_GATING_ENABLE
-    #if (GNB_TYPE_TN == TRUE)
+    #if (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       #define  CFG_IOC_SCLK_CLOCK_GATING_ENABLE           TRUE
     #else
       #define CFG_IOC_SCLK_CLOCK_GATING_ENABLE            FALSE
@@ -191,7 +196,7 @@
   #endif
 
   #ifndef CFG_IOMMU_L1_CLOCK_GATING_ENABLE
-    #if (GNB_TYPE_TN == TRUE)
+    #if (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       #define  CFG_IOMMU_L1_CLOCK_GATING_ENABLE           TRUE
     #else
       #define CFG_IOMMU_L1_CLOCK_GATING_ENABLE            FALSE
@@ -199,7 +204,7 @@
   #endif
 
   #ifndef CFG_IOMMU_L2_CLOCK_GATING_ENABLE
-    #if (GNB_TYPE_TN == TRUE)
+    #if (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       #define  CFG_IOMMU_L2_CLOCK_GATING_ENABLE           TRUE
     #else
       #define CFG_IOMMU_L2_CLOCK_GATING_ENABLE            FALSE
@@ -211,7 +216,7 @@
   #endif
 
   #ifndef CFG_GNB_BAPM_SUPPORT
-    #if (GNB_TYPE_TN == TRUE)
+    #if (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       #define CFG_GNB_BAPM_SUPPORT                        TRUE
     #else
       #define CFG_GNB_BAPM_SUPPORT                        FALSE
@@ -235,7 +240,7 @@
   #endif
 
   #ifndef CFG_GMC_CLOCK_GATING
-    #if (GNB_TYPE_TN == TRUE)
+    #if (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       #define  CFG_GMC_CLOCK_GATING                       TRUE
     #else
       #define CFG_GMC_CLOCK_GATING                        TRUE
@@ -243,7 +248,7 @@
   #endif
 
   #ifndef CFG_ORB_DYN_WAKE_ENABLE
-    #if (GNB_TYPE_TN == TRUE)
+    #if (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       #define  CFG_ORB_DYN_WAKE_ENABLE                    TRUE
     #else
       #define CFG_ORB_DYN_WAKE_ENABLE                     TRUE
@@ -301,9 +306,9 @@
     #else
       #define OPTION_NBINITATEARLY_ENTRY
     #endif
-    #if (OPTION_NB_EARLY_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_NB_EARLY_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  GnbEarlyInterfaceTN;
-      #define OPTION_GNBEARLYINTERFACETN_ENTRY            {AMD_FAMILY_TN, GnbEarlyInterfaceTN},
+      #define OPTION_GNBEARLYINTERFACETN_ENTRY            {AMD_FAMILY_TN | AMD_FAMILY_RL, GnbEarlyInterfaceTN},
     #else
       #define OPTION_GNBEARLYINTERFACETN_ENTRY
     #endif
@@ -328,9 +333,9 @@
     #ifndef OPTION_PCIE_CONFIG_MAP
       #define OPTION_PCIE_CONFIG_MAP TRUE
     #endif
-    #if (OPTION_PCIE_CONFIG_MAP == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE )
+    #if (OPTION_PCIE_CONFIG_MAP == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                 PcieConfigurationMap;
-      #define OPTION_PCIECONFIGURATIONMAP_ENTRY          {AMD_FAMILY_LN | AMD_FAMILY_ON  | AMD_FAMILY_TN , PcieConfigurationMap},
+      #define OPTION_PCIECONFIGURATIONMAP_ENTRY          {AMD_FAMILY_LN | AMD_FAMILY_ON | AMD_FAMILY_TN | AMD_FAMILY_RL , PcieConfigurationMap},
     #else
       #define OPTION_PCIECONFIGURATIONMAP_ENTRY
     #endif
@@ -344,9 +349,9 @@
     #else
       #define  OPTION_PCIEINITATEARLY_ENTRY
     #endif
-    #if (OPTION_PCIE_EARLY_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_PCIE_EARLY_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  PcieEarlyInterfaceTN;
-      #define OPTION_PCIEEARLYINTERFACETN_ENTRY           {AMD_FAMILY_TN, PcieEarlyInterfaceTN},
+      #define OPTION_PCIEEARLYINTERFACETN_ENTRY           {AMD_FAMILY_TN | AMD_FAMILY_RL, PcieEarlyInterfaceTN},
     #else
       #define  OPTION_PCIEEARLYINTERFACETN_ENTRY
     #endif
@@ -367,9 +372,9 @@
     #ifndef OPTION_PCIE_CONFIG_INIT
       #define OPTION_PCIE_CONFIG_INIT TRUE
     #endif
-    #if (OPTION_PCIE_CONFIG_INIT == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE )
+    #if (OPTION_PCIE_CONFIG_INIT == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  PcieConfigurationInit;
-      #define OPTION_PCIECONFIGURATIONINIT_ENTRY          {AMD_FAMILY_LN | AMD_FAMILY_ON | AMD_FAMILY_TN , PcieConfigurationInit},
+      #define OPTION_PCIECONFIGURATIONINIT_ENTRY          {AMD_FAMILY_LN | AMD_FAMILY_ON | AMD_FAMILY_TN | AMD_FAMILY_RL , PcieConfigurationInit},
     #else
       #define OPTION_PCIECONFIGURATIONINIT_ENTRY
     #endif
@@ -377,9 +382,9 @@
     #ifndef OPTION_NB_EARLIER_INIT
       #define OPTION_NB_EARLIER_INIT TRUE
     #endif
-    #if (OPTION_NB_EARLIER_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_NB_EARLIER_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  GnbEarlierInterfaceTN;
-      #define OPTION_GNBEARLIERINTERFACETN_ENTRY          {AMD_FAMILY_TN, GnbEarlierInterfaceTN},
+      #define OPTION_GNBEARLIERINTERFACETN_ENTRY          {AMD_FAMILY_TN | AMD_FAMILY_RL, GnbEarlierInterfaceTN},
     #else
       #define OPTION_GNBEARLIERINTERFACETN_ENTRY
     #endif
@@ -396,9 +401,9 @@
     #ifndef OPTION_GFX_CONFIG_POST_INIT
       #define OPTION_GFX_CONFIG_POST_INIT TRUE
     #endif
-    #if (OPTION_GFX_CONFIG_POST_INIT == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE )
+    #if (OPTION_GFX_CONFIG_POST_INIT == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  GfxConfigPostInterface;
-      #define OPTION_GFXCONFIGPOSTINTERFACE_ENTRY         {AMD_FAMILY_LN | AMD_FAMILY_ON  | AMD_FAMILY_TN , GfxConfigPostInterface},
+      #define OPTION_GFXCONFIGPOSTINTERFACE_ENTRY         {AMD_FAMILY_LN | AMD_FAMILY_ON | AMD_FAMILY_TN | AMD_FAMILY_RL , GfxConfigPostInterface},
     #else
       #define OPTION_GFXCONFIGPOSTINTERFACE_ENTRY
     #endif
@@ -412,9 +417,9 @@
     #else
       #define  OPTION_GFXINITATPOST_ENTRY
     #endif
-    #if (OPTION_GFX_POST_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_GFX_POST_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  GfxPostInterfaceTN;
-      #define OPTION_GFXPOSTINTERFACETN_ENTRY             {AMD_FAMILY_TN, GfxPostInterfaceTN},
+      #define OPTION_GFXPOSTINTERFACETN_ENTRY             {AMD_FAMILY_TN | AMD_FAMILY_RL, GfxPostInterfaceTN},
     #else
       #define OPTION_GFXPOSTINTERFACETN_ENTRY
     #endif
@@ -429,9 +434,9 @@
     #else
       #define OPTION_NBINITATPOST_ENTRY
     #endif
-    #if (OPTION_NB_POST_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_NB_POST_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  GnbPostInterfaceTN;
-      #define OPTION_GNBPOSTINTERFACETN_ENTRY             {AMD_FAMILY_TN, GnbPostInterfaceTN},
+      #define OPTION_GNBPOSTINTERFACETN_ENTRY             {AMD_FAMILY_TN | AMD_FAMILY_RL, GnbPostInterfaceTN},
     #else
       #define OPTION_GNBPOSTINTERFACETN_ENTRY
     #endif
@@ -446,9 +451,9 @@
     #else
       #define OPTION_PCIEINITATPOSTEARLY_ENTRY
     #endif
-    #if (OPTION_PCIE_POST_EALRY_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_PCIE_POST_EALRY_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  PciePostEarlyInterfaceTN;
-      #define OPTION_PCIEPOSTEARLYINTERFACETN_ENTRY       {AMD_FAMILY_TN, PciePostEarlyInterfaceTN},
+      #define OPTION_PCIEPOSTEARLYINTERFACETN_ENTRY       {AMD_FAMILY_TN | AMD_FAMILY_RL, PciePostEarlyInterfaceTN},
     #else
       #define OPTION_PCIEPOSTEARLYINTERFACETN_ENTRY
     #endif
@@ -463,9 +468,9 @@
     #else
       #define OPTION_PCIEINITATPOST_ENTRY
     #endif
-    #if (OPTION_PCIE_POST_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_PCIE_POST_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  PciePostInterfaceTN;
-      #define OPTION_PCIEPOSTINTERFACETN_ENTRY            {AMD_FAMILY_TN, PciePostInterfaceTN},
+      #define OPTION_PCIEPOSTINTERFACETN_ENTRY            {AMD_FAMILY_TN | AMD_FAMILY_RL, PciePostInterfaceTN},
     #else
       #define OPTION_PCIEPOSTINTERFACETN_ENTRY
     #endif
@@ -510,9 +515,9 @@
     #else
       #define OPTION_NBINITATENVT_ENTRY
     #endif
-    #if (OPTION_NB_ENV_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_NB_ENV_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  GnbEnvInterfaceTN;
-      #define OPTION_GNBENVINTERFACETN_ENTRY              {AMD_FAMILY_TN, GnbEnvInterfaceTN},
+      #define OPTION_GNBENVINTERFACETN_ENTRY              {AMD_FAMILY_TN | AMD_FAMILY_RL, GnbEnvInterfaceTN},
     #else
       #define OPTION_GNBENVINTERFACETN_ENTRY
     #endif
@@ -521,9 +526,9 @@
     #ifndef OPTION_GFX_CONFIG_ENV_INIT
       #define OPTION_GFX_CONFIG_ENV_INIT TRUE
     #endif
-    #if (OPTION_GFX_CONFIG_ENV_INIT == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE )
+    #if (OPTION_GFX_CONFIG_ENV_INIT == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                   GfxConfigEnvInterface;
-      #define OPTION_GFXCONFIGENVINTERFACE_ENTRY           {AMD_FAMILY_LN | AMD_FAMILY_ON  | AMD_FAMILY_TN, GfxConfigEnvInterface},
+      #define OPTION_GFXCONFIGENVINTERFACE_ENTRY           {AMD_FAMILY_LN | AMD_FAMILY_ON | AMD_FAMILY_TN | AMD_FAMILY_RL, GfxConfigEnvInterface},
     #else
       #define  OPTION_GFXCONFIGENVINTERFACE_ENTRY
     #endif
@@ -538,9 +543,9 @@
     #else
       #define OPTION_GFXINITATENVPOST_ENTRY
     #endif
-    #if (OPTION_GFX_ENV_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_GFX_ENV_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  GfxEnvInterfaceTN;
-      #define OPTION_GFXENVINTERFACETN_ENTRY              {AMD_FAMILY_TN, GfxEnvInterfaceTN},
+      #define OPTION_GFXENVINTERFACETN_ENTRY              {AMD_FAMILY_TN | AMD_FAMILY_RL, GfxEnvInterfaceTN},
     #else
       #define OPTION_GFXENVINTERFACETN_ENTRY
     #endif
@@ -571,9 +576,9 @@
     #else
       #define OPTION_PCIEINITATENV_ENTRY
     #endif
-    #if (OPTION_PCIE_ENV_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_PCIE_ENV_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE PcieEnvInterfaceTN;
-      #define OPTION_PCIEENVINTERFACETN_ENTRY             {AMD_FAMILY_TN, PcieEnvInterfaceTN},
+      #define OPTION_PCIEENVINTERFACETN_ENTRY             {AMD_FAMILY_TN | AMD_FAMILY_RL, PcieEnvInterfaceTN},
     #else
       #define OPTION_PCIEENVINTERFACETN_ENTRY
     #endif
@@ -646,9 +651,9 @@
     #else
       #define OPTION_GFXINITATMIDPOST_ENTRY
     #endif
-    #if (OPTION_GFX_MID_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_GFX_MID_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  GfxMidInterfaceTN;
-      #define OPTION_GFXMIDINTERFACETN_ENTRY              {AMD_FAMILY_TN, GfxMidInterfaceTN},
+      #define OPTION_GFXMIDINTERFACETN_ENTRY              {AMD_FAMILY_TN | AMD_FAMILY_RL, GfxMidInterfaceTN},
     #else
       #define OPTION_GFXMIDINTERFACETN_ENTRY
     #endif
@@ -664,7 +669,7 @@
     #endif
     #if (OPTION_GFX_INTEGRATED_TABLE_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
       OPTION_GNB_FEATURE                                  GfxIntInfoTableInterfaceTN;
-      #define OPTION_GFXINTINFOTABLEINTERFACETN_ENTRY     {AMD_FAMILY_TN, GfxIntInfoTableInterfaceTN},
+      #define OPTION_GFXINTINFOTABLEINTERFACETN_ENTRY     {AMD_FAMILY_TN | AMD_FAMILY_RL, GfxIntInfoTableInterfaceTN},
     #else
       #define OPTION_GFXINTINFOTABLEINTERFACETN_ENTRY
     #endif
@@ -679,9 +684,9 @@
     #else
       #define OPTION_PCIEINITATMID_ENTRY
     #endif
-    #if (OPTION_PCIe_MID_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_PCIe_MID_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  PcieMidInterfaceTN;
-      #define OPTION_PCIEMIDINTERFACETN_ENTRY             {AMD_FAMILY_TN, PcieMidInterfaceTN},
+      #define OPTION_PCIEMIDINTERFACETN_ENTRY             {AMD_FAMILY_TN | AMD_FAMILY_RL, PcieMidInterfaceTN},
     #else
       #define OPTION_PCIEMIDINTERFACETN_ENTRY
     #endif
@@ -696,9 +701,9 @@
     #else
       #define OPTION_NBINITATLATEPOST_ENTRY
     #endif
-    #if (OPTION_NB_MID_INIT == TRUE) && (GNB_TYPE_TN == TRUE)
+    #if (OPTION_NB_MID_INIT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  GnbMidInterfaceTN;
-      #define OPTION_GNBMIDINTERFACETN_ENTRY              {AMD_FAMILY_TN, GnbMidInterfaceTN},
+      #define OPTION_GNBMIDINTERFACETN_ENTRY              {AMD_FAMILY_TN | AMD_FAMILY_RL, GnbMidInterfaceTN},
     #else
       #define OPTION_GNBMIDINTERFACETN_ENTRY
     #endif
@@ -706,9 +711,9 @@
     #ifndef OPTION_GFX_CONFIG_POST_INIT
       #define OPTION_GFX_CONFIG_POST_INIT TRUE
     #endif
-    #if (OPTION_GFX_CONFIG_POST_INIT == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_TN == TRUE || GNB_TYPE_ON == TRUE)
+    #if (OPTION_GFX_CONFIG_POST_INIT == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE || GNB_TYPE_ON == TRUE)
       OPTION_GNB_FEATURE                                  GfxConfigMidInterface;
-      #define OPTION_GFXCONFIGMIDINTERFACE_ENTRY          {AMD_FAMILY_LN | AMD_FAMILY_TN | GNB_TYPE_ON, GfxConfigMidInterface},
+      #define OPTION_GFXCONFIGMIDINTERFACE_ENTRY          {AMD_FAMILY_LN | AMD_FAMILY_TN | AMD_FAMILY_RL | GNB_TYPE_ON, GfxConfigMidInterface},
     #else
       #define OPTION_GFXCONFIGMIDINTERFACE_ENTRY
     #endif
@@ -727,9 +732,9 @@
       #endif
     #endif
 
-    #if (OPTION_PCIE_CLK_PM_INTERFACE == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_ON == TRUE )
+    #if (OPTION_PCIE_CLK_PM_INTERFACE == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_ON == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  PcieClkPmInterface;
-      #define OPTION_PCIECLKPMINTERFACE_ENTRY             {AMD_FAMILY_TN  | AMD_FAMILY_ON, PcieClkPmInterface},
+      #define OPTION_PCIECLKPMINTERFACE_ENTRY             {AMD_FAMILY_TN | AMD_FAMILY_RL | AMD_FAMILY_ON, PcieClkPmInterface},
     #else
       #define OPTION_PCIECLKPMINTERFACE_ENTRY
     #endif
@@ -737,9 +742,9 @@
     #ifndef OPTION_PCIE_ASPM_INTERFACE
       #define OPTION_PCIE_ASPM_INTERFACE TRUE
     #endif
-    #if (OPTION_PCIE_ASPM_INTERFACE == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE )
+    #if (OPTION_PCIE_ASPM_INTERFACE == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  PcieAspmInterface;
-      #define OPTION_PCIEASPMINTERFACE_ENTRY              {AMD_FAMILY_LN | AMD_FAMILY_ON  | AMD_FAMILY_TN , PcieAspmInterface},
+      #define OPTION_PCIEASPMINTERFACE_ENTRY              {AMD_FAMILY_LN | AMD_FAMILY_ON | AMD_FAMILY_TN | AMD_FAMILY_RL , PcieAspmInterface},
     #else
       #define OPTION_PCIEASPMINTERFACE_ENTRY
     #endif
@@ -773,7 +778,7 @@
     #ifndef OPTION_ALIB
       #define OPTION_ALIB FALSE
     #endif
-    #if (OPTION_ALIB == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE)
+    #if (OPTION_ALIB == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_ON == TRUE  || GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       extern F_ALIB_UPDATE PcieAlibUpdatePcieMmioInfo;
       #if (GNB_TYPE_LN == TRUE)
         #if (OPTION_FM1_SOCKET_SUPPORT == TRUE)
@@ -791,7 +796,7 @@
                                   PcieAlibUpdatePcieInfo, \
                                   PcieAlibBuildAcpiTableLNFS1
         #endif
-      #elif (GNB_TYPE_TN == TRUE)
+      #elif (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
         #if (OPTION_FM2_SOCKET_SUPPORT == TRUE)
           extern F_ALIB_GET PcieAlibGetBaseTableTNFM2;
           F_ALIB_GET  *AlibGetBaseTable = PcieAlibGetBaseTableTNFM2;
@@ -823,7 +828,7 @@
         NULL
       };
       OPTION_GNB_FEATURE                                  PcieAlibFeature;
-      #define OPTION_PCIEALIBFEATURE_ENTRY                {AMD_FAMILY_LN | AMD_FAMILY_ON  | AMD_FAMILY_TN, PcieAlibFeature},
+      #define OPTION_PCIEALIBFEATURE_ENTRY                {AMD_FAMILY_LN | AMD_FAMILY_ON | AMD_FAMILY_TN | AMD_FAMILY_RL, PcieAlibFeature},
     #else
       F_ALIB_GET  *AlibGetBaseTable = NULL;
       F_ALIB_UPDATE* AlibDispatchTable [] = {
@@ -839,15 +844,15 @@
         #define OPTION_IOMMU_ACPI_IVRS FALSE
       #endif
     #endif
-    #if (OPTION_IOMMU_ACPI_IVRS == TRUE) && (GNB_TYPE_TN == TRUE )
+    #if (OPTION_IOMMU_ACPI_IVRS == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  GnbIommuIvrsTable;
-      #define OPTIONIOMMUACPIIVRSLATE_ENTRY               {AMD_FAMILY_TN, GnbIommuIvrsTable},
+      #define OPTIONIOMMUACPIIVRSLATE_ENTRY               {AMD_FAMILY_TN | AMD_FAMILY_RL, GnbIommuIvrsTable},
     #else
       #define OPTIONIOMMUACPIIVRSLATE_ENTRY
     #endif
-    #if (CFG_IOMMU_SUPPORT == TRUE) && (GNB_TYPE_TN == TRUE )
+    #if (CFG_IOMMU_SUPPORT == TRUE) && (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       OPTION_GNB_FEATURE                                  GnbIommuScratchMemoryRangeInterface;
-      #define OPTIONIOMMUSCRATCHMEMORYLATE_ENTRY          {AMD_FAMILY_TN , GnbIommuScratchMemoryRangeInterface},
+      #define OPTIONIOMMUSCRATCHMEMORYLATE_ENTRY          {AMD_FAMILY_TN | AMD_FAMILY_RL , GnbIommuScratchMemoryRangeInterface},
     #else
       #define OPTIONIOMMUSCRATCHMEMORYLATE_ENTRY
     #endif
@@ -865,9 +870,9 @@
     #ifndef OPTION_GFX_INIT_SVIEW
       #define OPTION_GFX_INIT_SVIEW TRUE
     #endif
-    #if (OPTION_GFX_INIT_SVIEW == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_TN == TRUE || GNB_TYPE_ON == TRUE)
+    #if (OPTION_GFX_INIT_SVIEW == TRUE) && (GNB_TYPE_LN == TRUE || GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE || GNB_TYPE_ON == TRUE)
       OPTION_GNB_FEATURE                                  GfxInitSview;
-      #define OPTION_GFXINITSVIEW_ENTRY                   {AMD_FAMILY_LN | AMD_FAMILY_TN, GfxInitSview},
+      #define OPTION_GFXINITSVIEW_ENTRY                   {AMD_FAMILY_LN | AMD_FAMILY_TN | AMD_FAMILY_RL, GfxInitSview},
     #else
       #define OPTION_GFXINITSVIEW_ENTRY
     #endif
@@ -888,12 +893,12 @@
   #endif
 
 
-  #if  (GNB_TYPE_TN == TRUE )
+  #if  (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
     S3_DISPATCH_FUNCTION  GnbSmuServiceRequestV4S3Script;
     S3_DISPATCH_FUNCTION  GnbLibStallS3Script;
     #define PCIELATERESTORETN
     #define GFXSCLKRESTORETN
-    #if (GNB_TYPE_TN == TRUE)
+    #if (GNB_TYPE_TN == TRUE || GNB_TYPE_RL == TRUE)
       S3_DISPATCH_FUNCTION  PcieLateRestoreInitTNS3Script;
       S3_DISPATCH_FUNCTION  GfxRequestSclkTNS3Script;
       #undef  PCIELATERESTORETN
@@ -912,4 +917,4 @@
   #endif
 
 #endif
-#endif  // _OPTION_GNB_INSTALL_H_
+#endif  /* _OPTION_GNB_INSTALL_H_ */

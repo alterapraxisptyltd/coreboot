@@ -15,7 +15,8 @@
 /*
  ******************************************************************************
  *
- * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc.
+ * Copyright (c) 2008 - 2012, Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2014, Edward O'Callaghan <eocallaghan@alterapraxis.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -95,13 +96,15 @@
 #define AMD_FAMILY_OR     (AMD_FAMILY_15_OR)
 #define AMD_FAMILY_15_TN  0x0000000000000200ull
 #define AMD_FAMILY_TN     (AMD_FAMILY_15_TN)
+#define AMD_FAMILY_15_RL  0x0000000000000300ull
+#define AMD_FAMILY_RL     (AMD_FAMILY_15_RL)
 
 
 // Family Unknown
 #define AMD_FAMILY_UNKNOWN 0x8000000000000000ull
 
 // Family Group equates
-#define AMD_FAMILY_GE_12   (AMD_FAMILY_12 | AMD_FAMILY_14 | (AMD_FAMILY_15_OR | AMD_FAMILY_15_TN | 0x0000000000000800ull)  | 0x0000000000010000ull )
+#define AMD_FAMILY_GE_12   (AMD_FAMILY_12 | AMD_FAMILY_14 | (AMD_FAMILY_15_OR | AMD_FAMILY_15_TN | AMD_FAMILY_15_RL | 0x0000000000000800ull)  | 0x0000000000010000ull )
 
 // Family 10h CPU_LOGICAL_ID.Revision equates
 // -------------------------------------
@@ -226,6 +229,9 @@
   // Family 15h TN steppings
 #define AMD_F15_TN_A0    0x0000000000000100ull
 #define AMD_F15_TN_A1    0x0000000000000200ull
+  // Family 15h RL steppings
+#define AMD_F15_RL_A0    0x0000000000000100ull
+#define AMD_F15_RL_A1    0x0000000000000200ull
   // Family 15h Unknown stepping
   // * This equate is used to ensure that unknown CPU revisions are       *
   // * identified as the last known revision of the silicon family:       *
@@ -241,8 +247,9 @@
 #define AMD_F15_TN_GT_A0 (AMD_F15_TN_ALL & ~AMD_F15_TN_A0)
 #define AMD_F15_TN_ALL   (AMD_F15_TN_Ax)
 
+#define AMD_F15_RL_Ax    (AMD_F15_RL_A0 | AMD_F15_RL_A1)
+#define AMD_F15_RL_GT_A0 (AMD_F15_RL_ALL & ~AMD_F15_RL_A0)
+#define AMD_F15_RL_ALL   (AMD_F15_RL_Ax)
 
 
-
-#endif      // _CPU_FAM_REGISTERS_H_
-
+#endif /* _CPU_FAM_REGISTERS_H_ */
