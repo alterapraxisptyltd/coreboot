@@ -106,7 +106,7 @@ static void sb600_lpc_init(void)
 /* what is its usage? */
 static u32 get_sbdn(u32 bus)
 {
-	device_t dev;
+	pci_devfn_t dev;
 
 	/* Find the device. */
 	dev = pci_locate_device_on_bus(PCI_ID(0x1002, 0x4385), bus);

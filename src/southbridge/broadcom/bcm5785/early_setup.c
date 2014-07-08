@@ -69,7 +69,7 @@ static void bcm5785_enable_wdt_port_cf9(void)
 
 unsigned get_sbdn(unsigned bus)
 {
-        device_t dev;
+	pci_devfn_t dev;
 
         /* Find the device.
          * There can only be one bcm5785 on a hypertransport chain/bus.
