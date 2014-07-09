@@ -22,19 +22,19 @@
 #include <arch/io.h>
 #include "lpc47m15x.h"
 
-static void pnp_enter_conf_state(device_t dev)
+static void pnp_enter_conf_state(pnp_devfn_t dev)
 {
 	u16 port = dev >> 8;
 	outb(0x55, port);
 }
 
-static void pnp_exit_conf_state(device_t dev)
+static void pnp_exit_conf_state(pnp_devfn_t dev)
 {
 	u16 port = dev >> 8;
 	outb(0xaa, port);
 }
 
-static inline void lpc47m15x_enable_serial(device_t dev, u16 iobase)
+static inline void lpc47m15x_enable_serial(pnp_devfn_t dev, u16 iobase)
 {
 	pnp_enter_conf_state(dev);
 	pnp_set_logical_device(dev);

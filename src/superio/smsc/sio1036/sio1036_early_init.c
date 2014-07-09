@@ -25,13 +25,13 @@
 #ifndef CONFIG_TTYS0_BASE
 #define CONFIG_TTYS0_BASE 0x3F8
 #endif
-static inline void sio1036_enter_conf_state(device_t dev)
+static inline void sio1036_enter_conf_state(pnp_devfn_t dev)
 {
 	unsigned port = dev>>8;
 	outb(0x55, port);
 }
 
-static inline void sio1036_exit_conf_state(device_t dev)
+static inline void sio1036_exit_conf_state(pnp_devfn_t dev)
 {
 	unsigned port = dev>>8;
 	outb(0xaa, port);
@@ -39,7 +39,7 @@ static inline void sio1036_exit_conf_state(device_t dev)
 
 static u8 detect_sio1036_chip(unsigned port)
 {
-	device_t dev;
+	pnp_devfn_t dev;
 	dev = PNP_DEV (port, SIO1036_SP1);
 	unsigned data;
 	sio1036_enter_conf_state (dev);
@@ -57,7 +57,7 @@ static u8 detect_sio1036_chip(unsigned port)
 
 static inline void sio1036_early_init(unsigned port)
 {
-	device_t dev;
+	pnp_devfn_t dev;
 	dev = PNP_DEV (port, SIO1036_SP1);
 
 	if (detect_sio1036_chip(port) != 0) {
