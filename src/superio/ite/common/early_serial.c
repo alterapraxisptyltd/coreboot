@@ -77,7 +77,7 @@ void ite_conf_clkin(device_t dev, u8 predivide)
 }
 
 /* Bring up early serial debugging output before the RAM is initialized. */
-void ite_enable_serial(device_t dev, u16 iobase)
+void ite_enable_serial(pnp_devfn_t dev, u16 iobase)
 {
 	pnp_enter_conf_state(dev);
 	pnp_set_logical_device(dev);

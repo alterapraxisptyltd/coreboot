@@ -69,7 +69,7 @@ static void it8661f_set_clkin(device_t dev, u8 clkin)
 	pnp_exit_ext_func_mode(dev);
 }
 
-void it8661f_enable_serial(device_t dev, u16 iobase)
+void it8661f_enable_serial(pnp_devfn_t dev, u16 iobase)
 {
 	pnp_enter_ext_func_mode(dev);
 	pnp_set_logical_device(dev);

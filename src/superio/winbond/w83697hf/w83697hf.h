@@ -37,6 +37,6 @@
 void w83697hf_set_clksel_48(device_t);
 
 /* Depreciated, use winbond_enable_serial() */
-void w83697hf_enable_serial(device_t dev, u16 iobase);
+void w83697hf_enable_serial(pnp_devfn_t dev, u16 iobase);
 
 #endif /* SUPERIO_WINBOND_W83697HF_H */

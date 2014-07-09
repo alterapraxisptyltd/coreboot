@@ -39,7 +39,7 @@ void pnp_exit_ext_func_mode(device_t dev)
 }
 
 /* Serial config is a fairly standard procedure. */
-void pilot_enable_serial(device_t dev, u16 iobase)
+void pilot_enable_serial(pnp_devfn_t dev, u16 iobase)
 {
 	pnp_enter_ext_func_mode(dev);
 	pnp_set_logical_device(dev);
@@ -48,7 +48,7 @@ void pilot_enable_serial(device_t dev, u16 iobase)
 	pnp_exit_ext_func_mode(dev);
 }
 
-void pilot_disable_serial(device_t dev)
+void pilot_disable_serial(pnp_devfn_t dev)
 {
 	pnp_enter_ext_func_mode(dev);
 	pnp_set_logical_device(dev);

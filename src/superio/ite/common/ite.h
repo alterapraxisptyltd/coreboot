@@ -28,7 +28,7 @@
 #define ITE_UART_CLK_PREDIVIDE_24 0x01
 
 void ite_conf_clkin(device_t dev, u8 predivide);
-void ite_enable_serial(device_t dev, u16 iobase);
+void ite_enable_serial(pnp_devfn_t dev, u16 iobase);
 
 /* Some boards need to init wdt+gpio's very early */
 void ite_reg_write(device_t dev, u8 reg, u8 value);

@@ -49,7 +49,7 @@ static void pnp_exit_conf_state(device_t dev)
  * @param dev The device to use.
  * @param iobase The I/O base of the serial port (usually 0x3f8/0x2f8).
  */
-void smscsuperio_enable_serial(device_t dev, u16 iobase)
+void smscsuperio_enable_serial(pnp_devfn_t dev, u16 iobase)
 {
 	pnp_enter_conf_state(dev);
 	pnp_set_logical_device(dev);

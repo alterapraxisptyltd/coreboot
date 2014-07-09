@@ -61,7 +61,7 @@ static void pnp_exit_conf_state(device_t dev)
 }
 
 /* Bring up early serial debugging output before the RAM is initialized. */
-void winbond_enable_serial(device_t dev, u16 iobase)
+void winbond_enable_serial(pnp_devfn_t dev, u16 iobase)
 {
 	pnp_enter_conf_state(dev);
 	pnp_set_logical_device(dev);

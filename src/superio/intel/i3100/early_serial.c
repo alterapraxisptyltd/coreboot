@@ -45,7 +45,7 @@ static void i3100_configure_uart_clk(device_t dev, u8 predivide)
 	pnp_exit_ext_func_mode(dev);
 }
 
-static void i3100_enable_serial(device_t dev, u16 iobase)
+static void i3100_enable_serial(pnp_devfn_t dev, u16 iobase)
 {
 	pnp_enter_ext_func_mode(dev);
 	pnp_set_logical_device(dev);

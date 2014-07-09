@@ -38,7 +38,7 @@ static void pnp_exit_conf_state(device_t dev)
 	outb(0xaa, port);
 }
 
-void kbc1100_early_serial(device_t dev, u16 iobase)
+void kbc1100_early_serial(pnp_devfn_t dev, u16 iobase)
 {
 	pnp_enter_conf_state(dev);
 	pnp_set_logical_device(dev);

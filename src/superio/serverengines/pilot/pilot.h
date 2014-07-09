@@ -36,7 +36,7 @@ void pnp_exit_ext_func_mode(device_t dev);
 
 void pilot_early_init(device_t dev);
 
-void pilot_enable_serial(device_t dev, u16 iobase);
-void pilot_disable_serial(device_t dev);
+void pilot_enable_serial(pnp_devfn_t dev, u16 iobase);
+void pilot_disable_serial(pnp_devfn_t dev);
 
 #endif /* SUPERIO_SERVERENGINES_PILOT_PILOT_H */
