@@ -6,7 +6,7 @@
 #include <device/device.h>
 #include <device/pnp_def.h>
 
-#ifndef __SIMPLE_DEVICE__
+#if defined(__PRE_RAM__)
 
 /* Primitive PNP resource manipulation */
 void pnp_write_config(device_t dev, u8 reg, u8 value);
@@ -61,5 +61,5 @@ struct pnp_mode_ops {
 void pnp_enter_conf_mode(device_t dev);
 void pnp_exit_conf_mode(device_t dev);
 
-#endif /* ! __SIMPLE_DEVICE__ */
+#endif /* __PRE_RAM__ */
 #endif /* DEVICE_PNP_H */

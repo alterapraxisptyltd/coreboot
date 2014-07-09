@@ -118,6 +118,7 @@ void pnp_read_resources(device_t dev)
 	return;
 }
 
+#if 0
 static void pnp_set_resource(device_t dev, struct resource *resource)
 {
 	if (!(resource->flags & IORESOURCE_ASSIGNED)) {
@@ -143,10 +144,11 @@ static void pnp_set_resource(device_t dev, struct resource *resource)
 
 	report_resource_stored(dev, resource, "");
 }
+#endif
 
 void pnp_set_resources(device_t dev)
 {
-	struct resource *res;
+	ROMSTAGE_CONST struct resource *res;
 
 	pnp_enter_conf_mode(dev);
 
@@ -155,7 +157,7 @@ void pnp_set_resources(device_t dev)
 
 	/* Paranoia says I should disable the device here... */
 	for (res = dev->resource_list; res; res = res->next)
-		pnp_set_resource(dev, res);
+		//pnp_set_resource(dev, res);
 
 	pnp_exit_conf_mode(dev);
 }
@@ -319,7 +321,7 @@ void pnp_enable_devices(device_t base_dev, struct device_operations *ops,
 			continue;
 
 		path.pnp.device = info[i].function;
-		dev = alloc_find_dev(base_dev->bus, &path);
+		dev = NULL;//alloc_find_dev(base_dev->bus, &path); //FIXME
 
 		/* Don't initialize a device multiple times. */
 		if (dev->ops)

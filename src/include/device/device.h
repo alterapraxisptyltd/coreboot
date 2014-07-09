@@ -16,12 +16,13 @@
 
 struct device;
 
-#ifndef __SIMPLE_DEVICE__
 typedef struct device * device_t;
 struct pci_operations;
 struct pci_bus_operations;
 struct smbus_bus_operations;
+#ifdef __PRE_RAM__
 struct pnp_mode_ops;
+#endif /* __PRE_RAM__ */
 
 /* Chip operations */
 struct chip_operations {
@@ -34,6 +35,18 @@ struct chip_operations {
 };
 
 #define CHIP_NAME(X) .name = X,
+
+#ifdef __PRE_RAM__
+struct device_operations {
+	void (*read_resources)(device_t dev);
+	void (*set_resources)(device_t dev);
+	void (*enable_resources)(device_t dev);
+	void (*enable)(device_t dev);
+	void (*init)(device_t dev);
+	ROMSTAGE_CONST struct pnp_mode_ops *ops_pnp_mode;
+};
+
+#else /* ! __PRE_RAM__ */
 
 struct bus;
 
@@ -56,9 +69,7 @@ struct device_operations {
 	const struct pci_bus_operations * (*ops_pci_bus)(device_t dev);
 	const struct pnp_mode_ops *ops_pnp_mode;
 };
-
-#endif /* ! __SIMPLE_DEVICE__ */
-
+#endif /* __PRE_RAM__ */
 
 struct bus {
 
@@ -119,6 +130,9 @@ struct device {
 #ifndef __PRE_RAM__
 	struct chip_operations *chip_ops;
 	const char *name;
+#else
+	ROMSTAGE_CONST struct chip_operations *chip_ops;
+	ROMSTAGE_CONST char *name;
 #endif
 	ROMSTAGE_CONST void *chip_info;
 };
@@ -247,6 +261,9 @@ ROMSTAGE_CONST struct device *dev_find_next_pci_device(
 ROMSTAGE_CONST struct device * dev_find_slot_on_smbus (unsigned int bus,
 							unsigned int addr);
 ROMSTAGE_CONST struct device * dev_find_slot_pnp(u16 port, u16 device);
+ROMSTAGE_CONST char * dev_path(device_t dev);
+device_t alloc_find_dev(struct bus *parent, struct device_path *path);
+//ROMSTAGE_CONST struct resource *new_resource(device_t dev, unsigned index);
 
 #endif
 

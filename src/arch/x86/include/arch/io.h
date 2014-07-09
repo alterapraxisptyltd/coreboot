@@ -220,11 +220,16 @@ static inline int log2f(int value)
 	((((DEVICE_ID) & 0xFFFF) << 16) | ((VENDOR_ID) & 0xFFFF))
 
 
+/* FIXME: Sources for romstage still use device_t (convert them to _devfn_t). */
+#if defined(__ROMCC__)
 #define PNP_DEV(PORT, FUNC) (((PORT) << 8) | (FUNC))
 
 /* FIXME: Sources for romstage still use device_t. */
 /* Use pci_devfn_t or pnp_devfn_t instead */
 typedef u32 device_t;
+typedef u32 pnp_devfn_t;
+#endif /* __ROMCC__ */
+
 
 /* FIXME: We need to make the coreboot to run at 64bit mode, So when read/write memory above 4G,
  * We don't need to set %fs, and %gs anymore
@@ -294,6 +299,7 @@ static inline pci_devfn_t pci_locate_device_on_bus(unsigned pci_id, unsigned bus
         return PCI_DEV_INVALID;
 }
 
+#if defined(__ROMCC__)
 /* Generic functions for pnp devices */
 static inline __attribute__((always_inline)) void pnp_write_config(pnp_devfn_t dev, uint8_t reg, uint8_t value)
 {
@@ -352,6 +358,7 @@ void pnp_set_drq(pnp_devfn_t dev, unsigned index, unsigned drq)
 {
 	pnp_write_config(dev, index, drq & 0xff);
 }
+#endif /* __ROMCC__ */
 
 #endif /* __SIMPLE_DEVICE__ */
 

@@ -122,3 +122,103 @@ ROMSTAGE_CONST struct device *dev_find_slot_pnp(u16 port, u16 device)
 	}
 	return 0;
 }
+
+/*
+ * Warning: This function uses a static buffer. Don't call it more than once
+ * from the same print statement!
+ */
+ROMSTAGE_CONST char *dev_path(device_t dev)
+{
+	static char buffer[DEVICE_PATH_MAX];
+
+	buffer[0] = '\0';
+#if 0
+	if (!dev) {
+		memcpy(buffer, "<null>", 7);
+	} else {
+		switch(dev->path.type) {
+		case DEVICE_PATH_PNP:
+			snprintf(buffer, sizeof (buffer), "PNP: %04x.%01x",
+				 dev->path.pnp.port, dev->path.pnp.device);
+			break;
+		default:
+			printk(BIOS_ERR, "Unknown device path type: %d\n",
+			       dev->path.type);
+			break;
+		}
+	}
+#endif
+	return buffer;
+}
+
+/**
+ * See if a device structure already exists and if not allocate it.
+ *
+ * @param parent The bus to find the device on.
+ * @param path The relative path from the bus to the appropriate device.
+ * @return Pointer to a device structure for the device on bus at path.
+ */
+device_t alloc_find_dev(struct bus *parent, struct device_path *path)
+{
+	device_t child = NULL;
+#if 0
+	spin_lock(&dev_lock);
+	child = find_dev_path(parent, path);
+	if (!child)
+		child = __alloc_dev(parent, path);
+	spin_unlock(&dev_lock);
+#endif
+	return child;
+}
+
+#if 0
+/**
+ * See if a resource structure already exists for a given index and if not
+ * allocate one.
+ *
+ * Then initialize the resource to default values.
+ *
+ * @param dev The device to find the resource on.
+ * @param index The index of the resource on the device.
+ * @return TODO.
+ */
+ROMSTAGE_CONST struct resource *new_resource(device_t dev, unsigned index)
+{
+	struct resource *resource = NULL; //, *tail;
+
+	/* First move all of the free resources to the end. */
+	compact_resources(dev);
+
+	/* See if there is a resource with the appropriate index. */
+	resource = probe_resource(dev, index);
+	if (!resource) {
+		if (free_resources == NULL && !allocate_more_resources())
+			die("Couldn't allocate more resources.");
+
+		resource = free_resources;
+		free_resources = free_resources->next;
+		memset(resource, 0, sizeof(*resource));
+		resource->next = NULL;
+		tail = dev->resource_list;
+		if (tail) {
+			while (tail->next) tail = tail->next;
+			tail->next = resource;
+		} else {
+			dev->resource_list = resource;
+		}
+	}
+
+	/* Initialize the resource values. */
+	if (!(resource->flags & IORESOURCE_FIXED)) {
+		resource->flags = 0;
+		resource->base = 0;
+	}
+	resource->size  = 0;
+	resource->limit = 0;
+	resource->index = index;
+	resource->align = 0;
+	resource->gran  = 0;
+
+	return resource;
+}
+#endif
